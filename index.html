@@ -10,6 +10,7 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
+            background-color: black; /* Prevents white background flashes */
         }
         .image {
             width: 100vw;
@@ -19,29 +20,37 @@
             top: 0;
             left: 0;
         }
-        @media (max-width: 768px) {  /* Mobile-specific image */
+        @media (max-width: 768px) {  
             .image { content: url('mobile.jpg'); } 
+        }
+        @media (max-width: 768px) and (orientation: portrait) {  
+            body::after {
+                content: "";
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100vw;
+                height: env(safe-area-inset-bottom, 20px); /* Covers the white bottom bar */
+                background-color: black;
+            }
         }
     </style>
 </head>
 <body>
     <img src="b4k.jpg" class="image" alt="B4K Image">
     
-    <audio id="bg-music" autoplay loop>
+    <audio id="bg-music" loop>
         <source src="audio.mp3" type="audio/mpeg">
         Your browser does not support the audio tag.
     </audio>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("click", function() {
             let audio = document.getElementById("bg-music");
-            audio.volume = 0;  // Start silent
-            audio.play().then(() => {
-                setTimeout(() => { audio.volume = 1; }, 500); // Gradually raise volume
-            }).catch(() => {
-                document.addEventListener("click", () => { audio.play(); }, { once: true });
-            });
-        });
+            if (audio.paused) {
+                audio.play();
+            }
+        }, { once: true });  // Ensures it only triggers once
     </script>
 </body>
 </html>
