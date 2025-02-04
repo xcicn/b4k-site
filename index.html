@@ -11,7 +11,7 @@
             height: 100vh;
             overflow: hidden;
         }
-        img {
+        .image {
             width: 100vw;
             height: 100vh;
             object-fit: cover;
@@ -19,9 +19,22 @@
             top: 0;
             left: 0;
         }
+        
+        /* Hide mobile image by default */
+        #mobile-image { display: none; }
+
+        /* Show mobile image only on small screens */
+        @media (max-width: 768px) {
+            #desktop-image { display: none; }
+            #mobile-image { display: block; }
+        }
     </style>
 </head>
 <body>
-    <img src="b4k.jpg" alt="B4K Image">
+    <!-- Desktop Image -->
+    <img id="desktop-image" class="image" src="b4k.jpg" alt="B4K Image">
+    
+    <!-- Mobile Image -->
+    <img id="mobile-image" class="image" src="b4k-mobile.jpg" alt="B4K Mobile Image">
 </body>
 </html>
