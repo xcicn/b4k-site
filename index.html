@@ -45,12 +45,18 @@
     </audio>
 
     <script>
-        document.addEventListener("click", function() {
-            let audio = document.getElementById("bg-music");
-            if (audio.paused) {
-                audio.play();
-            }
-        }, { once: true });  // Ensures it only triggers once
+        let audio = document.getElementById("bg-music");
+
+        function playAudio() {
+            audio.volume = 1.0; // Set maximum volume
+            audio.play().catch(err => console.log("Autoplay blocked:", err)); // Log if blocked
+            document.removeEventListener("click", playAudio);
+            document.removeEventListener("touchstart", playAudio);
+        }
+
+        // Trigger audio playback on user interaction (click or tap)
+        document.addEventListener("click", playAudio);
+        document.addEventListener("touchstart", playAudio); // For mobile support
     </script>
 </body>
 </html>
