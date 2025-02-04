@@ -10,7 +10,7 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            background-color: black; /* Prevents white background flashes */
+            background-color: black;
         }
         .image {
             width: 100vw;
@@ -47,16 +47,25 @@
     <script>
         let audio = document.getElementById("bg-music");
 
+        // Function to start the audio
         function playAudio() {
-            audio.volume = 1.0; // Set maximum volume
-            audio.play().catch(err => console.log("Autoplay blocked:", err)); // Log if blocked
+            audio.volume = 1.0;  // Set max volume
+            audio.play().then(() => {
+                console.log("Audio is playing at max volume.");
+            }).catch(err => {
+                console.log("Autoplay blocked or error:", err);
+                // Retry if blocked, after user interaction
+                document.addEventListener("click", () => audio.play());
+                document.addEventListener("touchstart", () => audio.play());
+            });
             document.removeEventListener("click", playAudio);
             document.removeEventListener("touchstart", playAudio);
         }
 
-        // Trigger audio playback on user interaction (click or tap)
-        document.addEventListener("click", playAudio);
-        document.addEventListener("touchstart", playAudio); // For mobile support
+        // Trigger audio play on click or tap
+        document.addEventListener("click", playAudio, { once: true });
+        document.addEventListener("touchstart", playAudio, { once: true });
     </script>
 </body>
 </html>
+
