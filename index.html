@@ -19,22 +19,18 @@
             top: 0;
             left: 0;
         }
-        
-        /* Hide mobile image by default */
-        #mobile-image { display: none; }
-
-        /* Show mobile image only on small screens */
-        @media (max-width: 768px) {
-            #desktop-image { display: none; }
-            #mobile-image { display: block; }
-        }
     </style>
 </head>
 <body>
-    <!-- Desktop Image -->
-    <img id="desktop-image" class="image" src="b4k.jpg" alt="B4K Image">
-    
-    <!-- Mobile Image -->
-    <img id="mobile-image" class="image" src="b4k-mobile.jpg" alt="B4K Mobile Image">
+    <img src="b4k.jpg" class="image" alt="B4K Image">
+    <audio id="bg-music" loop>
+        <source src="audio.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+    <script>
+        document.addEventListener('click', function() {
+            document.getElementById('bg-music').play();
+        });
+    </script>
 </body>
 </html>
